@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#is_overworld",
+  "features": "integrated_lucky_blocks:lucky_temple",
+  "step": "local_modifications"
+}

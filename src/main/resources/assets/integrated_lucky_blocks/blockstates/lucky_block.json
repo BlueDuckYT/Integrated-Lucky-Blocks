@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "integrated_lucky_blocks:block/lucky_block"
+    }
+  }
+}
