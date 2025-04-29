@@ -31,10 +31,10 @@ public class NetherReactorAction extends EventAction {
             level.setBlock(pos.north().west(), Blocks.GOLD_BLOCK.defaultBlockState(), 2);
             level.setBlock(pos.south().east(), Blocks.GOLD_BLOCK.defaultBlockState(), 2);
 
-            level.setBlock(pos.east().above(), Blocks.COBBLESTONE.defaultBlockState(), 2);
-            level.setBlock(pos.west().above(), Blocks.COBBLESTONE.defaultBlockState(), 2);
-            level.setBlock(pos.north().above(), Blocks.COBBLESTONE.defaultBlockState(), 2);
-            level.setBlock(pos.south().above(), Blocks.COBBLESTONE.defaultBlockState(), 2);
+            level.setBlock(pos.east().north().above(), Blocks.COBBLESTONE.defaultBlockState(), 2);
+            level.setBlock(pos.west().south().above(), Blocks.COBBLESTONE.defaultBlockState(), 2);
+            level.setBlock(pos.north().west().above(), Blocks.COBBLESTONE.defaultBlockState(), 2);
+            level.setBlock(pos.south().east().above(), Blocks.COBBLESTONE.defaultBlockState(), 2);
 
             level.setBlock(pos.above(), BlockRegistry.LUCKY_BLOCK.get().defaultBlockState(), 2);
       }

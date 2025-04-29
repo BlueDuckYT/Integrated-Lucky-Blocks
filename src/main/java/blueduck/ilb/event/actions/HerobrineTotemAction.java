@@ -21,12 +21,12 @@ public class HerobrineTotemAction extends EventAction {
                   }
             }
             level.setBlock(pos.above(1), Blocks.NETHERRACK.defaultBlockState(), 2);
-            level.setBlock(pos.above(2), Blocks.NETHERRACK.defaultBlockState(), 2);
+            //level.setBlock(pos.above(2), Blocks.NETHERRACK.defaultBlockState(), 2);
 
-            level.setBlock(pos.above().east().north(), Blocks.REDSTONE_TORCH.defaultBlockState(), 2);
-            level.setBlock(pos.above().north().west(), Blocks.REDSTONE_TORCH.defaultBlockState(), 2);
-            level.setBlock(pos.above().west().south(), Blocks.REDSTONE_TORCH.defaultBlockState(), 2);
-            level.setBlock(pos.above().south().east(), Blocks.REDSTONE_TORCH.defaultBlockState(), 2);
+            level.setBlock(pos.above().east(), Blocks.REDSTONE_TORCH.defaultBlockState(), 2);
+            level.setBlock(pos.above().north(), Blocks.REDSTONE_TORCH.defaultBlockState(), 2);
+            level.setBlock(pos.above().west(), Blocks.REDSTONE_TORCH.defaultBlockState(), 2);
+            level.setBlock(pos.above().south(), Blocks.REDSTONE_TORCH.defaultBlockState(), 2);
       }
 
 }

@@ -6,6 +6,9 @@ import blueduck.ilb.worldgen.TemplePalette;
 import blueduck.ilb.worldgen.TemplePalettes;
 import net.minecraftforge.fml.ModList;
 
+import java.time.LocalDate;
+import java.time.Month;
+
 public class EventAdditions {
 
     public static void addEvents() {
@@ -29,12 +32,20 @@ public class EventAdditions {
             addVouniernTurretsEvents();
         if (ModList.get().isLoaded("compound_v"))
             addCompoundVEvents();
+        if (ModList.get().isLoaded("jolly_boxes"))
+            addJollyBoxesEvents();
         if (ModList.get().isLoaded("artifacts"))
             addArtifactsEvents();
         if (ModList.get().isLoaded("caverns_and_chasms"))
             addCavernsAndChasmsEvents();
+        if (ModList.get().isLoaded("create"))
+            addCreateEvents();
         if (ModList.get().isLoaded("rottencreatures"))
             addRottenCreaturesEvents();
+        if (ModList.get().isLoaded("dimdoors"))
+            addDimDoorsEvents();
+        if (ModList.get().isLoaded("invincible"))
+            addInvincibleEvents();
     }
 
     public static void addDefaultEvents() {
@@ -83,11 +94,11 @@ public class EventAdditions {
         EventList.addEvent(new LuckyEvent(new CageAction(true)), 5);
         EventList.addEvent(new LuckyEvent(new CageAction("minecraft:obsidian", "minecraft:obsidian", "minecraft:obsidian", true)), 5);
         EventList.addEvent(new LuckyEvent(new SetBlockAction("minecraft:water", 0), new TpPlayerUpAction(16), new SetBlockAction("minecraft:anvil", 8)), 5);
-        EventList.addEvent(new LuckyEvent(new TpPlayerUpAction(-40), new SolidSphereAction("minecraft:infested_stone", 5, true), new SolidSphereAction("minecraft:air", 2, true), new SpawnNearPlayerAction("minecraft:silverfish", 1, 1)), 3);
+        EventList.addEvent(new LuckyEvent(new TpPlayerUpAction(-10), new SolidSphereAction("minecraft:infested_stone", 3, true), new SolidSphereAction("minecraft:air", 2, true), new SpawnNearPlayerAction("minecraft:silverfish", 1, 1)), 1);
 
         EventList.addEvent(new LuckyEvent(new TpPlayerUpAction(60), new SolidSphereAction("minecraft:diamond_ore", 2, true)), 1);
         EventList.addEvent(new LuckyEvent(new TpPlayerUpAction(60), new SolidSphereAction("minecraft:cobweb", 2, true)), 1);
-        EventList.addEvent(new LuckyEvent(new TpPlayerUpAction(60), new SolidSphereAction("minecraft:gravel", 4, true), new TpPlayerUpAction(-60)), 3);
+        EventList.addEvent(new LuckyEvent(new TpPlayerUpAction(60), new SolidSphereAction("minecraft:gravel", 4, true)), 1);
 
 
 
@@ -117,11 +128,12 @@ public class EventAdditions {
         EventList.addEvent(new LuckyEvent(new ItemAction("minecraft:spyglass", 1)), 5);
         EventList.addEvent(new LuckyEvent(new ItemAction("minecraft:sponge", 1)), 1);
         EventList.addEvent(new LuckyEvent(new ItemAction("minecraft:slime_block", 1), new MessageAction("Slime Cube!")), 1);
-        EventList.addEvent(new LuckyEvent(new SetBlockAction("minecraft:bedrock", 0), new MessageAction("That's unfortunate.")), 1);
+        EventList.addEvent(new LuckyEvent(new SetBlockAction("minecraft:bedrock", 0, false), new MessageAction("That's unfortunate.")), 1);
 
-        EventList.addEvent(new LuckyEvent(new ExplodeAction(2), new ItemAction("minecraft:ancient_debris", 1), new SolidBoxAction("minecraft:lava", 1)), 1);
+        EventList.addEvent(new LuckyEvent(new ExplodeAction(2), new SetBlockAction("minecraft:ancient_debris", 0), new SolidBoxAction("minecraft:lava", 1, false)), 1);
         EventList.addEvent(new LuckyEvent(new ItemAction("minecraft:enchanted_golden_apple", 1), new SpawnAction("minecraft:firework_rocket", 1)), 3);
         EventList.addEvent(new LuckyEvent(new ItemAction("minecraft:beacon", 1), new SpawnAction("minecraft:firework_rocket", 1)), 2);
+        //EventList.addEvent(new LuckyEvent(new ItemAction("minecraft:elytra", 1), new SpawnRainAction("minecraft:shulker", 5, 0, 4)), 1);
 
         EventList.addEvent(new LuckyEvent(new TagItemAction("minecraft:trim_templates", 1, 1)), 2);
         EventList.addEvent(new LuckyEvent(new TagItemAction("minecraft:music_discs", 1, 1)), 3);
@@ -133,19 +145,43 @@ public class EventAdditions {
         EventList.addEvent(new LuckyEvent(new TagItemAction("minecraft:arrows", 8, 3, true), new ItemAction("minecraft:bow", 1)), 1);
         EventList.addEvent(new LuckyEvent(new TagItemAction("minecraft:arrows", 24, 1, true), new ItemAction("minecraft:bow", 1)), 3);
         EventList.addEvent(new LuckyEvent(new ItemAction("minecraft:arrow", 32), new ItemAction("minecraft:bow", 1)), 6);
+        EventList.addEvent(new LuckyEvent(new ItemAction("minecraft:rotten_flesh", 1)), 3);
+        EventList.addEvent(new LuckyEvent(new SetBlockAction("minecraft:ender_chest", 0, false)), 2);
+        EventList.addEvent(new LuckyEvent(new ItemAction("minecraft:flint_and_steel", 1)), 1);
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("minecraft:egg", 32, 72, 5)), 3);
+        EventList.addEvent(new LuckyEvent(new ItemAction("minecraft:echo_shard", 1)), 1);
+        EventList.addEvent(new LuckyEvent(new SetBlockAction("minecraft:water", 0, false), new SpawnAction("minecraft:axolotl", 1)), 1);
+        EventList.addEvent(new LuckyEvent(new SetBlockAction("minecraft:water", 0, false), new SpawnAction("minecraft:turtle", 1)), 1);
         EventList.addEvent(new LuckyEvent(new HoleAction(2, 10), new LavaRoofAction(2, 3, true)), 3);
         EventList.addEvent(new LuckyEvent(new ItemAction("minecraft:diamond_block", 1), new SpawnAction("minecraft:tnt", 1), new LavaRoofAction(2, 3, false)), 3);
+        EventList.addEvent(new LuckyEvent(new SetBlockAction("minecraft:diamond_block", 1, false), new SpawnRainAction("minecraft:tnt", 1, 5, 0)), 2);
+        EventList.addEvent(new LuckyEvent(new SetBlockAction("minecraft:diamond_block", 1, false)), 1);
         EventList.addEvent(new LuckyEvent(new TagItemAction("minecraft:hoes", 1, 3)), 3);
         EventList.addEvent(new LuckyEvent(new TagItemAction("minecraft:hoes", 1, 4), new MessageAction("Greetings, Huzz")), 1);
         EventList.addEvent(new LuckyEvent(new LootChestAction("minecraft:chests/buried_treasure"), new SpawnRainAction("minecraft:tnt", 1, 3, 0), new SpawnRainAction("minecraft:tnt", 1, 5, 0)), 3);
-        EventList.addEvent(new LuckyEvent(new LootChestAction("minecraft:chests/simple_dungeon")), 2);
-        EventList.addEvent(new LuckyEvent(new LootChestAction("minecraft:chests/desert_pyramid", true), new SetBlockAction("minecraft:tnt", -1, false)), 1);
+        EventList.addEvent(new LuckyEvent(new LootChestAction("minecraft:chests/simple_dungeon")), 5);
+        EventList.addEvent(new LuckyEvent(new LootChestAction("minecraft:chests/desert_pyramid", true), new SetBlockAction("minecraft:tnt", -1, false)), 2);
+        EventList.addEvent(new LuckyEvent(new LootChestAction("minecraft:chests/bastion_bridge")), 1);
+        EventList.addEvent(new LuckyEvent(new LootChestAction("minecraft:chests/bastion_other")), 1);
+        EventList.addEvent(new LuckyEvent(new LootChestAction("minecraft:chests/woodland_mansion")), 2);
         EventList.addEvent(new LuckyEvent(new NetherReactorAction()), 3);
-        EventList.addEvent(new LuckyEvent(new HerobrineTotemAction(), new SpawnRainAction("minecraft:lightning_bolt", 5, 3, 0)), 1);
+        EventList.addEvent(new LuckyEvent(new HerobrineTotemAction(), new SpawnRainAction("minecraft:lightning_bolt", 5, 2, 0)), 1);
         EventList.addEvent(new LuckyEvent(new LuckyTempleAction(true, false)), 3);
         EventList.addEvent(new LuckyEvent(new LuckyTempleAction(true, true)), 1);
         EventList.addEvent(new LuckyEvent(new LuckyTempleAction(false, true)), 1);
         EventList.addEvent(new LuckyEvent(new TpPlayerUpAction(500)), 1);
+        EventList.addEvent(new LuckyEvent(new HoleAction(2, 1000)), 1);
+
+        EventList.addEvent(new LuckyEvent(new SolidBoxAction("minecraft:coal_block", 1)), 2);
+        EventList.addEvent(new LuckyEvent(new SolidBoxAction("minecraft:iron_block", 1)), 1);
+        EventList.addEvent(new LuckyEvent(new SolidBoxAction("minecraft:gold_block", 1)), 1);
+        EventList.addEvent(new LuckyEvent(new SolidBoxAction("minecraft:copper_block", 1)), 3);
+
+        EventList.addEvent(new LuckyEvent(new SolidBoxAction("minecraft:lapis_block", 1)), 1);
+        EventList.addEvent(new LuckyEvent(new SolidBoxAction("minecraft:redstone_block", 1)), 1);
+
+        EventList.addEvent(new LuckyEvent(new SetBlockAction("minecraft:sculk_catalyst", 0, false)), 1);
+
 
 
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("minecraft:lightning_bolt", 5, 0, 3)), 5);
@@ -164,6 +200,8 @@ public class EventAdditions {
         EventList.addEvent(new LuckyEvent(new EffectAction("minecraft:darkness", 0, 20*20, true, 6D, "minecraft:player")), 2);
         EventList.addEvent(new LuckyEvent(new EffectAction("minecraft:wither", 1, 20*10, true, 6D)), 1);
         EventList.addEvent(new LuckyEvent(new EffectAction("minecraft:wither", 0, 20*10, true, 6D), new EffectAction("minecraft:darkness", 0, 20*20, true, 6D, "minecraft:player")), 2);
+        EventList.addEvent(new LuckyEvent(new EffectAction("minecraft:water_breathing", 0, 20*300, true, 6D, "minecraft:player"), new EncaseInBoxAction("minecraft:obsidian", 3), new SolidBoxAction("minecraft:water", 2), new SetBlockAction("minecraft:sea_lantern", 0, true)), 1);
+        EventList.addEvent(new LuckyEvent(new TpPlayerUpAction(96), new EffectAction("minecraft:water_breathing", 0, 20*300, true, 6D, "minecraft:player"), new EncaseInBoxAction("minecraft:obsidian", 3), new SolidBoxAction("minecraft:water", 2), new SetBlockAction("minecraft:sea_lantern", 0, true)), 1);
 
 
 
@@ -171,7 +209,7 @@ public class EventAdditions {
         TemplePalettes.addPalette(new TemplePalette("minecraft:stone_bricks", "minecraft:stone_bricks", "minecraft:stone_brick_slab"), 10);
         TemplePalettes.addPalette(new TemplePalette("minecraft:oak_planks", "minecraft:oak_log", "minecraft:oak_slab"), 2);
         TemplePalettes.addPalette(new TemplePalette("minecraft:oak_planks", "minecraft:oak_log", "minecraft:torch"), 2);
-
+        
     }
 
     public static void addAlexCavesEvents() {
@@ -180,9 +218,10 @@ public class EventAdditions {
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexscaves:teletor", 3, 2, 4)), 3);
         EventList.addEvent(new LuckyEvent(new SpawnAction("alexscaves:nucleeper", 1), new SpawnRainAction("alexscaves:gammaroach", 5, 2, 3)), 1);
         EventList.addEvent(new LuckyEvent(new ArenaAction("alexscaves:guanostone", "alexscaves:thornwood_fence", "minecraft:air"), new SpawnNearPlayerAction("alexscaves:corrodent", 3, 2)), 2);
+        EventList.addEvent(new LuckyEvent(new ArenaAction("alexscaves:galena", "alexscaves:metal_rebar", "alexscaves:metal_swarf"), new SpawnNearPlayerAction("alexscaves:ferrouslime", 3, 2)), 2);
         EventList.addEvent(new LuckyEvent(new ArenaAction("alexscaves:limestone", "alexscaves:pewen_fence", "alexscaves:limestone_slab"), new SpawnNearPlayerAction("alexscaves:vallumraptor", 5, 3)), 2);
-        EventList.addEvent(new LuckyEvent(new SpawnAction("alexscaves:gumbeeper", 3)), 3);
-        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexscaves:caniac", 3, 0, 1)), 3);
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexscaves:gumbeeper", 3, 0, 1)), 4);
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexscaves:caniac", 3, 0, 1)), 4);
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexscaves:vallumraptor", 5, 1, 2), new SpawnRainAction("alexscaves:tremorsaurus", 1, 4, 4)), 2);
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexscaves:nuclear_bomb", 1, 256, 0), new MessageAction("RUN!!!")), 1);
         EventList.addEvent(new LuckyEvent(new FeatureAction("alexscaves:acid_lake", -1)), 1);
@@ -198,6 +237,12 @@ public class EventAdditions {
         EventList.addEvent(new LuckyEvent(new ItemAction("alexscaves:green_soylent", 16), new MessageAction("I LOVE SOY!")), 5);
         EventList.addEvent(new LuckyEvent(new SpawnAction("alexscaves:subterranodon", 1), new ItemAction("alexscaves:trilocaris_tail", 5)), 3);
 
+        EventList.addEvent(new LuckyEvent(new SpawnAction("alexscaves:vesper", 1)), 3);
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexscaves:gloomoth", 3, 0, 1)), 2);
+        EventList.addEvent(new LuckyEvent(new SpawnAction("alexscaves:watcher", 1)), 1);
+
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexscaves:gingerbread_man", 8, 0, 1)), 2);
+
         EventList.addEvent(new LuckyEvent(new ItemAction("alexscaves:ortholance", 1)), 1);
         EventList.addEvent(new LuckyEvent(new ItemAction("alexscaves:magic_conch", 1)), 1);
         EventList.addEvent(new LuckyEvent(new ItemAction("alexscaves:sea_staff", 1)), 1);
@@ -209,6 +254,8 @@ public class EventAdditions {
         EventList.addEvent(new LuckyEvent(new ExplodeAction(0), new EffectAction("alexscaves:stunned", 0, 20*10, true, 6D)), 3);
         EventList.addEvent(new LuckyEvent(new ExplodeAction(0), new EffectAction("alexscaves:stunned", 0, 20*10, true, 6D, "minecraft:player")), 2);
         EventList.addEvent(new LuckyEvent(new EffectAction("alexscaves:bubbled", 0, 20*10, true, 6D)), 5);
+
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexsmobs:cinder_brick", 24, 48, 5)), 3);
 
     }
 
@@ -225,21 +272,31 @@ public class EventAdditions {
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexsmobs:warped_mosco", 1, 48, 0, "Conquest"), new MessageAction("Stand ready for my arrival, worm!")), 1);
         EventList.addEvent(new LuckyEvent(new ArenaAction("minecraft:dripstone_block", "minecraft:iron_bars", "minecraft:cobbled_deepslate_slab"), new SpawnNearPlayerAction("alexsmobs:rocky_roller", 3, 2)), 3);
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexsmobs:cockroach", 16, 0, 3)), 10);
-        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexsmobs:cachalot_whale", 1, 72, 3)), 3);
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexsmobs:cachalot_whale", 1, 256, 3)), 3);
         //EventList.addEvent(new LuckyEvent(new SetBlockAction("alexsmobs:sculk_boomer", -1, false), new LootChestAction("minecraft:chests/ancient_city", true)), 2);
         EventList.addEvent(new LuckyEvent(new ArenaAction("minecraft:packed_ice", "minecraft:iron_bars", "minecraft:air"), new SpawnNearPlayerAction("alexsmobs:froststalker", 3, 2), new SpawnNearPlayerAction("alexsmobs:tusklin", 1, 2)), 2);
-
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexsmobs:banana_slug", 5, 0, 1)), 5);
+        EventList.addEvent(new LuckyEvent(new SpawnAction("alexsmobs:gorilla", 1)), 2);
+        EventList.addEvent(new LuckyEvent(new SpawnAction("alexsmobs:stradpole", 5)), 2);
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexsmobs:jerboa", 5, 0, 1)), 2);
+        EventList.addEvent(new LuckyEvent(new SpawnAction("alexsmobs:anteater", 1)), 2);
+        EventList.addEvent(new LuckyEvent(new ItemAction("alexsmobs:banana", 64), new MessageAction("Going bananas")), 1);
+        EventList.addEvent(new LuckyEvent(new ItemAction("alexsmobs:fish_oil", 1)), 1);
+        EventList.addEvent(new LuckyEvent(new ItemAction("alexsmobs:triops_eggs", 5)), 3);
+        EventList.addEvent(new LuckyEvent(new ItemAction("alexsmobs:strange_fish_finder", 1)), 1);
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexsmobs:emu_egg", 24, 72, 3)), 3);
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("alexsmobs:enderiophage_rocket", 10, 0, 2)), 3);
     }
 
     public static void addOuterEndEvents() {
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("outer_end:sinker", 5, 2, 3)), 1);
-        EventList.addEvent(new LuckyEvent(new SpawnRainAction("outer_end:himmelite", 10, 1, 2)), 3);
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("outer_end:himmelite", 10, 0, 2)), 3);
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("outer_end:purpur_golem", 1, 72, 0)), 1);
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("outer_end:purpur_golem", 1, 72, 0, "Conquest"), new MessageAction("Stand ready for my arrival, worm!")), 1);
         EventList.addEvent(new LuckyEvent(new SpawnAction("minecraft:shulker", 1)), 2);
         EventList.addEvent(new LuckyEvent(new SolidSphereAction("outer_end:ominous_miasma", 3, false), new EffectAction("minecraft:levitation", 1, 20*10, true, 5D)), 3);
-        EventList.addEvent(new LuckyEvent(new ItemAction("outer_end:levitation_core", 1)), 1);
-        EventList.addEvent(new LuckyEvent(new LootChestAction("outer_end:chests/catacomb_treasure"), new SpawnRainAction("outer_end:entombed", 3, 2, 2)), 2);
+        EventList.addEvent(new LuckyEvent(new ItemAction("outer_end:levitation_core", 1), new SpawnRainAction("minecraft:shulker", 3, 0, 2)), 1);
+        EventList.addEvent(new LuckyEvent(new LootChestAction("outer_end:chests/catacomb_treasure"), new SpawnRainAction("outer_end:entombed", 3, 0, 2)), 2);
 
 
     }
@@ -267,7 +324,7 @@ public class EventAdditions {
 
         TemplePalettes.addPalette(new TemplePalette("jellyfishing:coralstone", "jellyfishing:coralstone", "jellyfishing:coralstone_slab"), 1);
         TemplePalettes.addPalette(new TemplePalette("jellyfishing:scrap_metal", "jellyfishing:scrap_metal", "jellyfishing:scrap_metal_slab"), 1);
-        TemplePalettes.addPalette(new TemplePalette("jellyfishing:chrome_metal", "jellyfishing:chrome_metal", "jellyfishing:chrome_metal_slab"), 2);
+        TemplePalettes.addPalette(new TemplePalette("jellyfishing:chrome_bricks", "jellyfishing:chrome_metal", "jellyfishing:chrome_metal_slab"), 2);
 
     }
 
@@ -277,6 +334,9 @@ public class EventAdditions {
         EventList.addEvent(new LuckyEvent(new ArenaAction("dustrial_decor:sheet_metal_treading", "minecraft:iron_bars", "dustrial_decor:sheet_metal_treading_slab"), new SpawnRainAction("minecraft:tnt", 10, 10, 4)), 1);
         EventList.addEvent(new LuckyEvent(new ArenaAction("dustrial_decor:cast_iron_bricks", "dustrial_decor:cast_iron_balustrade", "dustrial_decor:cast_iron_brick_slab"), new SpawnRainAction("minecraft:cave_spider", 10, 3, 2)), 2);
 
+        EventList.addEvent(new LuckyEvent(new ItemAction("dustrial_decor:industrial_iron_billet", 64)), 3);
+        EventList.addEvent(new LuckyEvent(new ItemAction("dustrial_decor:cast_iron_billet", 64)), 3);
+
         TemplePalettes.addPalette(new TemplePalette("dustrial_decor:cast_iron_bricks", "dustrial_decor:cast_iron_pillar", "dustrial_decor:cast_iron_brick_slab"), 3);
 
     }
@@ -284,6 +344,8 @@ public class EventAdditions {
     public static void addBlightedBeastsEvents() {
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("blighted_beasts:reaper", 5, 0, 2), new SpawnRainAction("blighted_beasts:reverb", 3, 0, 3), new SpawnRainAction("blighted_beasts:bloater", 2, 0, 3), new SpawnAction("blighted_beasts:seer", 1), new FeatureAction("minecraft:sculk_patch_ancient_city", 0)), 10);
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("blighted_beasts:skitter", 3, 2, 3), new FeatureAction("minecraft:sculk_patch_deep_dark", 0)), 2);
+
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("blighted_beasts:sculk_pearl", 1, 48, 0)), 3);
     }
 
     public static void addArtifactsEvents() {
@@ -306,12 +368,39 @@ public class EventAdditions {
         EventList.addEvent(new LuckyEvent(new EffectAction("compound_v:invincible", 0, 20*60*5, true, 5D)), 1);
     }
 
+    public static void addJollyBoxesEvents() {
+        EventList.addEvent(new LuckyEvent(new SetBlockAction("jolly_boxes:large_box", 72, false)), 1);
+        EventList.addEvent(new LuckyEvent(new SetBlockAction("jolly_boxes:medium_box", 72, false)), 2);
+        EventList.addEvent(new LuckyEvent(new SetBlockAction("jolly_boxes:small_box", 72, false)), 3);
+       }
+
     public static void addCavernsAndChasmsEvents() {
         EventList.addEvent(new LuckyEvent(new SpawnAction("caverns_and_chasms:mime", 1)), 5);
         EventList.addEvent(new LuckyEvent(new SpawnAction("caverns_and_chasms:copper_golem", 1)), 3);
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("caverns_and_chasms:deeper", 3, 0, 1)), 5);
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("caverns_and_chasms:peeper", 3, 0, 1)), 5);
 
+        EventList.addEvent(new LuckyEvent(new ItemAction("caverns_and_chasms:silver_ingot", 16)), 3);
+        EventList.addEvent(new LuckyEvent(new ItemAction("caverns_and_chasms:tin_ingot", 16)), 3);
+        EventList.addEvent(new LuckyEvent(new ItemAction("caverns_and_chasms:spinel", 16)), 2);
+        EventList.addEvent(new LuckyEvent(new ItemAction("caverns_and_chasms:zirconia", 8)), 2);
+
+        EventList.addEvent(new LuckyEvent(new ItemAction("caverns_and_chasms:necromium_nugget", 1)), 3);
+        EventList.addEvent(new LuckyEvent(new ItemAction("caverns_and_chasms:netherite_nugget", 1)), 3);
+        EventList.addEvent(new LuckyEvent(new ItemAction("caverns_and_chasms:necromium_ingot", 1)), 1);
+
+        EventList.addEvent(new LuckyEvent(new SetBlockAction("caverns_and_chasms:splurter", 0)), 1);
+    }
+
+    public static void addCreateEvents() {
+        EventList.addEvent(new LuckyEvent(new ItemAction("create:blaze_cake", 1)), 1);
+        EventList.addEvent(new LuckyEvent(new ItemAction("create:brass_ingot", 32)), 3);
+        EventList.addEvent(new LuckyEvent(new ItemAction("create:andesite_alloy", 32)), 3);
+        EventList.addEvent(new LuckyEvent(new ItemAction("create:zinc_ingot", 32)), 3);
+        EventList.addEvent(new LuckyEvent(new ItemAction("create:brass_ingot", 12), new ItemAction("create:zinc_ingot", 12), new ItemAction("create:andesite_alloy", 24)), 3);
+
+        EventList.addEvent(new LuckyEvent(new CageAction("create:copper_shingles", "create:copper_bars", "create:copper_shingle_slab", false), new SetBlockAction("minecraft:anvil", 16)), 1);
+        EventList.addEvent(new LuckyEvent(new CageAction("create:andesite_alloy_block", "create:andesite_bars", "create:cut_andesite_slab", false), new SetBlockAction("minecraft:anvil", 16)), 1);
 
     }
 
@@ -322,6 +411,21 @@ public class EventAdditions {
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("rottencreatures:swampy", 5, 0, 1), new SpawnRainAction("minecraft:drowned", 5, 0, 1)), 3);
         EventList.addEvent(new LuckyEvent(new SpawnRainAction("rottencreatures:undead_miner", 5, 0, 1)), 3);
         EventList.addEvent(new LuckyEvent(new SpawnAction("rottencreatures:dead_beard", 1)), 1);
+        EventList.addEvent(new LuckyEvent(new ItemAction("rottencreatures:treasure_chest", 1)), 10);
+    }
+
+    public static void addDimDoorsEvents() {
+        EventList.addEvent(new LuckyEvent(new EncaseInBoxAction("dimdoors:black_fabric", 4), new SolidBoxAction("minecraft:air", 3)), 1);
+        EventList.addEvent(new LuckyEvent(new EncaseInBoxAction("dimdoors:white_fabric", 4), new SolidBoxAction("minecraft:air", 3)), 1);
+        EventList.addEvent(new LuckyEvent(new TpPlayerUpAction(30), new EncaseInBoxAction("dimdoors:black_fabric", 4), new SolidBoxAction("minecraft:air", 3)), 1);
+        EventList.addEvent(new LuckyEvent(new TpPlayerUpAction(30), new EncaseInBoxAction("dimdoors:white_fabric", 4), new SolidBoxAction("minecraft:air", 3)), 1);
+
+    }
+
+    public static void addInvincibleEvents() {
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("invincible:viltrumite_male", 2, 0, 1), new SpawnRainAction("invincible:iltrumite_female", 1, 0, 1)), 1);
+        EventList.addEvent(new LuckyEvent(new SpawnRainAction("invincible:mauler", 2, 0, 1)), 1);
+        EventList.addEvent(new LuckyEvent(new SpawnAction("invincible:invincible_mark", 1)), 1);
     }
 
 }
